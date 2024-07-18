@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.scss';
 import { peopleFromServer } from './data/people';
+import cn from 'classnames';
 
 export const App: React.FC = () => {
   const { name, born, died } = peopleFromServer[0];
@@ -24,33 +25,22 @@ export const App: React.FC = () => {
 
           <div className="dropdown-menu" role="menu" data-cy="suggestions-list">
             <div className="dropdown-content">
-              <div className="dropdown-item" data-cy="suggestion-item">
-                <p className="has-text-link">Pieter Haverbeke</p>
-              </div>
-
-              <div className="dropdown-item" data-cy="suggestion-item">
-                <p className="has-text-link">Pieter Bernard Haverbeke</p>
-              </div>
-
-              <div className="dropdown-item" data-cy="suggestion-item">
-                <p className="has-text-link">Pieter Antone Haverbeke</p>
-              </div>
-
-              <div className="dropdown-item" data-cy="suggestion-item">
-                <p className="has-text-danger">Elisabeth Haverbeke</p>
-              </div>
-
-              <div className="dropdown-item" data-cy="suggestion-item">
-                <p className="has-text-link">Pieter de Decker</p>
-              </div>
-
-              <div className="dropdown-item" data-cy="suggestion-item">
-                <p className="has-text-danger">Petronella de Decker</p>
-              </div>
-
-              <div className="dropdown-item" data-cy="suggestion-item">
-                <p className="has-text-danger">Elisabeth Hercke</p>
-              </div>
+              {peopleFromServer.map(person => (
+                <div
+                  className="dropdown-item"
+                  data-cy="suggestion-item"
+                  key={person.slug}
+                >
+                  <p
+                    className={cn({
+                      'has-text-link': person.sex === 'm',
+                      'has-text-danger': person.sex === 'f',
+                    })}
+                  >
+                    {person.name}
+                  </p>
+                </div>
+              ))}
             </div>
           </div>
         </div>
